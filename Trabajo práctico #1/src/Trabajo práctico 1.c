@@ -1,41 +1,15 @@
 /*
  ============================================================================
- Name        : Trabajo.c
- Author      : Silvia Rus
- Version     :
- Copyright   : Your copyright notice
- Description : Hello World in C, Ansi-style
+ Name        : Trabajo práctico 1.c
+ Author      : Silvia Rus Mata
  ============================================================================
 
-Hacer una calculadora. Para ello el progr iniciará y contará con un menú de opciones:
-1. Ingresar 1er operando (A=x)
-
-2. Ingresar 2do operando (B=y)
-
-3. Calcular todas las operaciones
-a) Calcular la suma (A+B)
-b) Calcular la resta (A-B)
-c) Calcular la division (A/B)
-d) Calcular la multiplicacion (A*B
-e) Calcular el factorial (A!)
-
-4. Informar resultados
-a) “El resultado de A+B es: r”
-b) “El resultado de A-B es: r”
-c) “El resultado de A/B es: r” o “
-d) “El resultado de A*B es: r”
-e) “El factorial de A es: r1 y El factorial de B es: r2”
-5. Salir
-• Todas las funciones matemáticas
-que contenga las funciones para r
-• En el menú deberán aparecer los
-(donde dice “x” e “y” en el ejemp
-• Deberán contemplarse los casos d
-• Documentar todas las funciones
+CALCULADORA
  */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <limits.h>
 #include "utn.h"
 
 int main(void)
@@ -51,64 +25,67 @@ int main(void)
 	int resultadoFactorial2;
 	int seleccionOpciones;
 
-	numero1=getInt("\nIngrese el primer número: ");
-	numero2=getInt("\nIngrese el segundo número: ");
-
-	seleccionOpciones=getInt("\nSeleccione una opción: \n-> 1 si quiere sumar.\n-> 2 si quiere restar.\n-> 3 si quiere multiplicar.\n-> 4 si quiere dividir.\n-> 5 si quiere ver los factoriales.\n\nOpción: ");
-
-	switch(seleccionOpciones)
+	if(getInt(&numero1, "\nIngrese el primer número: ", "\nError ingresando el primer número", INT_MAX, INT_MIN, 3)==0)
 	{
-		case 1://suma
-			if(sumar(&resultadoSuma, numero1, numero2)==0)
+		if(getInt(&numero2, "\nIngrese el segundo número: ", "\nError ingresando el segundo número", INT_MAX, INT_MIN, 3)==0)
+		{
+			if(getInt(&seleccionOpciones,"\nSeleccione una opción: \n-> 1 si quiere sumar.\n-> 2 si quiere restar.\n-> 3 si quiere multiplicar.\n-> 4 si quiere dividir.\n-> 5 si quiere ver los factoriales.\n\nOpción: ", "\nERROR. Ingrese un número entre el 1 y el 5", 5, 1, 5)==0)
 			{
-				printf("\nEl resultado de %d+%d es: %d.", numero1, numero2, resultadoSuma);
-			}
-			else
-			{
-				printf("\nNo se ha podido realizar la suma.");
-			}
-				break;
-		case 2://resta
-			if(restar(&resultadoResta, numero1, numero2)==0)
-			{
-				printf("\nEl resultado de %d-%d es: %d.", numero1, numero2, resultadoResta);
-			}
-			else
-			{
-				printf("\nNo se ha podido realizar la resta.");
-			}
-				break;
-		case 3://multiplicación
-			if(multiplicar(&resultadoMultiplicacion, numero1, numero2)==0)
-			{
-				printf("\nEl resultado de %d*%d es: %d.", numero1, numero2, resultadoMultiplicacion);
-			}
-			else
-			{
-				printf("\nNo se ha podido realizar la multiplicación.");
-			}
-				break;
-		case 4://división
-			if(dividir(&resultadoDivision, numero1, numero2)==0)
-			{
-				printf("\nEl resultado de %d/%d es: %f.", numero1, numero2, resultadoDivision);
-			}
-			else
-			{
-				printf("\nNo se ha podido realizar la división.");
-			}
-				break;
-		case 5://factoriales
-			if(factorial(&resultadoFactorial1, numero1)==0 && factorial(&resultadoFactorial2, numero2)==0)
-			{
-				printf("\nEl factorial de %d es %d y el factorial de %d es %d.", numero1, resultadoFactorial1, numero2, resultadoFactorial2);
-			}
-			else
-			{
-				printf("\nNo se ha podido calcular el factorial de alguno o de los dos números.");
-			}
-				break;
-	}
+				switch(seleccionOpciones)
+				{
+					case 1://suma
+						if(sumar(&resultadoSuma, numero1, numero2)==0)
+						{
+							printf("\nEl resultado de %d+%d es: %d.", numero1, numero2, resultadoSuma);
+						}
+							break;
+					case 2://resta
+						if(restar(&resultadoResta, numero1, numero2)==0)
+						{
+							printf("\nEl resultado de %d-%d es: %d.", numero1, numero2, resultadoResta);
+						}
+							break;
+					case 3://multiplicación
+						if(multiplicar(&resultadoMultiplicacion, numero1, numero2)==0)
+						{
+							printf("\nEl resultado de %d*%d es: %d.", numero1, numero2, resultadoMultiplicacion);
+						}
+							break;
+					case 4://división
+						if(dividir(&resultadoDivision, numero1, numero2)==0)
+						{
+							printf("\nEl resultado de %d/%d es: %f.", numero1, numero2, resultadoDivision);
+						}
+						else
+						{
+							printf("\nNo se ha podido realizar la división.");
+						}
+							break;
+					case 5://factoriales
+						if(factorial(&resultadoFactorial1, numero1)==0 && factorial(&resultadoFactorial2, numero2)==0)
+						{
+							printf("\nEl factorial de %d es %d y el factorial de %d es %d.", numero1, resultadoFactorial1, numero2, resultadoFactorial2);
+						}
+						else
+						{
+							printf("\nNo se ha podido calcular el factorial de alguno o de los dos números.");
+						}
 
+				}
+			}
+			else
+			{
+				printf("\nHa agotado el número de intentos para introducir una opción. Reinicie la aplicación.");
+			}
+		}
+		else
+		{
+			printf("\nHa agotado el número de intentos para el segundo número. Reinicie la aplicación.");
+		}
+	}
+	else
+	{
+		printf("\nHa agotado el número de intentos para el primer número. Reinicie la aplicación.");
+	}
 	return EXIT_SUCCESS;
 }
