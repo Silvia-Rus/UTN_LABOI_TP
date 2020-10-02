@@ -4,8 +4,6 @@
  Author      : Silvia Rus Mata
  ============================================================================
  */
-#define LEN_LIST 5
-#define LEN_STR 51
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -13,6 +11,9 @@
 #include "arrayEmployees.h"
 #include "utn.h"
 #include "calc.h"
+
+#define LEN_LIST 1000
+#define LEN_STR 51
 
 
 
