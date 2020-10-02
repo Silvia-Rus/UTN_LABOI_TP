@@ -15,10 +15,7 @@
 #define LEN_LIST 1000
 #define LEN_STR 51
 
-
-
 int main(void)
-
 {
 	setbuf(stdout, NULL);
 	int respuesta;

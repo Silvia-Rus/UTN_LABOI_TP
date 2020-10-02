@@ -32,7 +32,10 @@ static int myGets(char* cadena, int len)
 	if(cadena != NULL && len > 0)
 	{
 		fflush(stdin);
-		if(fgets(buffer, sizeof(buffer), stdin) != NULL)
+		if(cadena !=NULL &&
+				len>0 &&
+				(fgets(buffer, sizeof(buffer), stdin) != NULL) &&
+				buffer[0] !='\n')
 		{
 			if(buffer[strnlen(buffer, sizeof(buffer))-1] == '\n')
 			{

@@ -251,12 +251,12 @@ int emp_addEmployees(Employee *list, int len)
 		!utn_getLetrasYEspacios(name,
 								sizeof(name),
 								"\nNombre: ",
-								"\nError. El nombre solo puede contener letras y espacios.\n",
+								"\nError. Introduzca un nombre que solo contenga letras y espacios.\n",
 								INTENTOS) &&
 		!utn_getLetrasYEspacios(lastName,
 								sizeof(lastName),
 								"\nApellido: ",
-								"\nError. El apellido solo puede contener letras y espacios.\n",
+								"\nError.Introduzca un apellido que solo contenga letras y espacios.\n",
 								INTENTOS) &&
 		!utn_getNumero(&sector,
 						"\nSector (1, 2 ó 3): ",
@@ -304,9 +304,12 @@ int emp_modifyData(Employee *list, int len)
 					if(!utn_getNumero(&fieldToModify,
 									"\nMENÚ MODIFICACIÓN.\n"
 									"Elija el dato que quiera modificar: \n"
-									"1-Nombre: \n2-Apellido: \n3-Salario: \n"
-									"4-Sector: \n5-Volver a menú principal. ", "\n"
-									"Ingrese una opcion valida: ",
+									"1-Nombre. \n"
+									"2-Apellido. \n"
+									"3-Salario. \n"
+									"4-Sector. "
+									"\n5-Volver a menú principal.\n\n",
+									"\nIngrese una opcion valida: ",
 									1, 5, INTENTOS))
 					{
 						switch(fieldToModify)
@@ -394,7 +397,7 @@ int emp_removeEmployee(Employee *list, int len)
 					{
 						list[index].isEmpty=TRUE;
 						retorno=0;
-						printf("%s %s ha sido dado de baja exitosamente.\n", list[index].name, list[index].lastName);
+						printf("%s %s ha sido dado de baja exitosamente.\n\n", list[index].name, list[index].lastName);
 					}
 					else
 					{
