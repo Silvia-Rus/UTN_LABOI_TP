@@ -69,31 +69,6 @@ int employee_idMasAltoMasUno(LinkedList* this)
 	return retorno;
 }
 /*
-* \brief genera identificadores únicos autoincrementales.
-* \return el identificador único autoincremental generado.
-* ------EN CONSTRUCCIÓN-------
-*/
-/*int employee_nuevoId(void)
-{
-	//int id
-
-	//primera carga
-	//id[0].id=idMasAltoCsv
-	//id=id[0].id+1
-	//id[0].id=id
-
-	//segunda carga
-	//id=id[0].id+1
-	//id[0].id=id
-
-
-	//return id;
-
-	static int id = 0;
-	id = id + 1;
-	return id;
-}*/
-/*
  * \brief constructor que inicializa los parámetros que puedo recibir.
  * \param id en formato char recibido para guardar.
  * \param nombre en formato char recibido para guardar.
@@ -416,7 +391,7 @@ int employee_sort(void* itemOne,void* itemTwo)
 	if(employee_getNombre(auxEmp1, nombre1)==0   &&
 	   employee_getNombre(auxEmp2, nombre2)==0	)
 	{
-		if( strncmp(nombre1, nombre2,NOMBRE_LEN)>0)
+		if(strncmp(nombre1, nombre2,NOMBRE_LEN)>0)
 		{
 			retorno = 1;
 		}

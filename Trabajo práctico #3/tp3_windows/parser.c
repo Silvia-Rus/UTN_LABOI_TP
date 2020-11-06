@@ -13,7 +13,7 @@
  * \return 0 si todo ok, -1 si hay errores.
  *
  */
-int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
+int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee, int pIdMasAlto)
 {
 	int retornar=-1;
 	char auxId[AUX_LEN];
@@ -22,6 +22,7 @@ int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
 	char auxSueldo[AUX_LEN];
 	int r;
 	Employee* auxEmployee;
+
 
 	if(pFile!=NULL && pArrayListEmployee!=NULL)
 	{
@@ -34,6 +35,7 @@ int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
 				{
 					auxEmployee = employee_newParametrosChar(auxId, auxNombre, auxHorasTrabajadas, auxSueldo);
 					ll_add(pArrayListEmployee, auxEmployee);
+
 					retornar=0;
 				}
 
@@ -41,7 +43,6 @@ int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
 		fclose(pFile);
 	}
 	return retornar;
-    return 1;
 }
 
 /** \brief Parsea los datos los datos de los empleados desde el archivo data.csv (modo binario).
@@ -58,6 +59,7 @@ int parser_EmployeeFromBinary(FILE* pFile , LinkedList* pArrayListEmployee)
 		int auxId;
 		int auxHorasTrabajadas;
 		int auxSueldo;
+
 
 		Employee* auxEmployee;
 		if(pFile!=NULL && pArrayListEmployee!=NULL)

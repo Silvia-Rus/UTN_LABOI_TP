@@ -18,7 +18,7 @@ typedef struct
 }Employee;
 
 int employee_idMasAltoMasUno(LinkedList* this);
-int employee_nuevoId(void);
+int employee_nuevoId(LinkedList* pArrayListEmployee);
 int employee_findById(LinkedList* pArrayListEmployee, int id);
 Employee* employee_new();
 int employee_initArrayPunteros (Employee** listPunteros, int len);

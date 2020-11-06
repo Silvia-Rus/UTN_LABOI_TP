@@ -18,6 +18,7 @@ int controller_loadFromText(char* path , LinkedList* pArrayListEmployee)
 {
 	int retorno=-1;
 	FILE* pFile;
+
 	if(path!=NULL && pArrayListEmployee!=NULL)
 	{
 		pFile = fopen(path, "r");
@@ -33,6 +34,7 @@ int controller_loadFromText(char* path , LinkedList* pArrayListEmployee)
 			else
 			{
 				printf("\nArchivo cargado con éxito.");
+
 				retorno=0;
 			}
 		}
@@ -94,6 +96,7 @@ int controller_addEmployee(LinkedList* pArrayListEmployee)
 			!utn_getNumeroInt(&auxSueldo, "\nSueldo: ", "\nERROR. Ingrese un número entero", 0, INT_MAX, INTENTOS))
 		{
 			auxId = employee_idMasAltoMasUno(pArrayListEmployee);
+			//auxId = employee_idMasAltoMasUno(pArrayListEmployee);
 			auxEmployee = employee_newParametros(auxId, auxNombre, auxHorasTrabajadas, auxSueldo);
 			ll_add(pArrayListEmployee, auxEmployee);
 			printf("\nId asignado: %d", auxId);
@@ -344,12 +347,14 @@ int controller_sortEmployee(LinkedList* pArrayListEmployee)
 			printf("\nNo hay datos en la base de datos.");
 			printf("\nVolviendo al menú principal...");
 		}
+		else
+		{
+			ll_sort(pArrayListEmployee,employee_sort,1);
+			printf("\nLista ordenada con éxito.");
+			retorno=0;
+		}
 	}
-	else
-	{
-		ll_sort(pArrayListEmployee,employee_sort,1);
-		retorno=0;
-	}
+
 	return retorno;
 }
 /* \brief Guarda los datos de los empleados en el archivo data.csv (modo texto).
