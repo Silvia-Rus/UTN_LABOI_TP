@@ -22,25 +22,21 @@ int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
 	char auxSueldo[AUX_LEN];
 	int r;
 	Employee* auxEmployee;
-	int flagEncabezado = 0;
+
 	if(pFile!=NULL && pArrayListEmployee!=NULL)
 	{
+		ll_clear(pArrayListEmployee);
 		do
 		{
 			r = fscanf(pFile,"%[^,],%[^,],%[^,],%[^\n]\n",auxId,auxNombre,auxHorasTrabajadas,auxSueldo);
-			if (flagEncabezado == 0)
-			{
-				flagEncabezado = 1;
-			}
-			else
-			{
-				if(r==4)
+
+				if(r==4 && esNumericaInt(auxId, sizeof(auxId)))
 				{
 					auxEmployee = employee_newParametrosChar(auxId, auxNombre, auxHorasTrabajadas, auxSueldo);
 					ll_add(pArrayListEmployee, auxEmployee);
 					retornar=0;
 				}
-			}
+
 		}while(feof(pFile)==0);
 		fclose(pFile);
 	}
@@ -56,7 +52,31 @@ int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
  *
  */
 int parser_EmployeeFromBinary(FILE* pFile , LinkedList* pArrayListEmployee)
-{
+	{
+		int output=-1;
+		char auxNombre[NOMBRE_LEN];
+		int auxId;
+		int auxHorasTrabajadas;
+		int auxSueldo;
 
-    return 1;
-}
+		Employee* auxEmployee;
+		if(pFile!=NULL && pArrayListEmployee!=NULL)
+		{
+			ll_clear(pArrayListEmployee);
+			do
+			{
+				if( fread(&auxId,sizeof(int),1,pFile) &&
+					fread(auxNombre, NOMBRE_LEN, 1, pFile)&&
+					fread(&auxHorasTrabajadas,sizeof(int), 1, pFile) &&
+					fread(&auxSueldo,sizeof(int),1,pFile))
+				{
+					auxEmployee = employee_newParametros(auxId, auxNombre, auxHorasTrabajadas, auxSueldo);
+					ll_add(pArrayListEmployee, auxEmployee);
+					output=0;
+				}
+			}while(feof(pFile)==0);
+			fclose(pFile);
+		}
+
+		return output;
+	}

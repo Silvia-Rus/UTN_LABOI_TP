@@ -11,8 +11,6 @@
 #include "Employee.h"
 #include "getData.h"
 
-#define LEN_ARRAY_PUNTEROS 1000
-
 /****************************************************
     Menu:
      1. Cargar los datos de los empleados desde el archivo data.csv (modo texto).
@@ -31,25 +29,26 @@ int main()
 {
 	setbuf(stdout, NULL);
 	int option;
+	int banderaCargaArchivo=0;
+	int opcionCarga;
 
     LinkedList* listaEmpleados = ll_newLinkedList();
 
-    printf("---¡¡Bienvenido al sistema de carga de empleados!!----\n\n");
-
-
+    printf("---¡¡Bienvenido al sistema de carga de empleados!!---\n");
+    printf("---->Cargue un archivo para comenzar a trabajar.<----");
    do{
 		if(!utn_getNumeroInt(&option,
 							"\n\nMENÚ PRINCIPAL:\n"
 							"Ingrese un número del 1 al 10:\n"
 							"1-Cargar los datos de los empleados desde el archivo data.csv (modo texto).\n"
-							"2-Cargar los datos de los empleados desde el archivo data.csv (modo binario).\n"
+							"2-Cargar los datos de los empleados desde el archivo dataBin.csv (modo binario).\n"
 							"3-Dar de alta de empleado.\n"
 							"4-Modificar datos de empleado.\n"
 							"5-Dar de baja de empleado.\n"
 							"6-Listar empleados.\n"
-							"7-Ordenar empleado.\n"
+							"7-Ordenar empleados alfabéticamente por nombre.\n"
 							"8-Guardar los datos de los empleados en el archivo data.csv (modo texto).\n"
-							"9-Guardar los datos de los empleados en el archivo data.csv (modo binario).\n"
+							"9-Guardar los datos de los empleados en el archivo dataBin.csv (modo binario).\n"
 							"10-Salir\n",
 							"\n\nERROR\n\n\n",
 							1,
@@ -59,28 +58,92 @@ int main()
 			switch(option)
 			{
 				case 1://Cargar los datos de los empleados desde el archivo data.csv (modo texto).
-					if(!controller_loadFromText("data.csv",listaEmpleados))
+					if(banderaCargaArchivo==0 && !controller_loadFromText("data.csv",listaEmpleados))
 					{
-						printf("\nVolviendo al menú principal...");
+
+						printf("\nEmpleados cargados correctamente\n");
+						banderaCargaArchivo=1;
+
+					}
+					else
+					{
+
+						if(!utn_getNumeroInt(&opcionCarga,
+											"\nYa hay datos cargados, ¿desea reemplazarlos?"
+											"\n1 -Sí (se borrara todo lo cargado tanto por lista como manualmente)"
+											"\n2 -No (vuelve al menú principal) ",
+											"ERROR. Ingrese un número entero",
+											1,
+											2,
+											INTENTOS))
+						{
+							switch(opcionCarga)
+							{
+							case 1:
+								if(!controller_loadFromText("data.csv",listaEmpleados))
+								{
+									printf("\nVolviendo al menú principal...");
+								}
+								break;
+							case 2:
+
+									printf("\nVolviendo al menú principal...");
+
+								break;
+							}
+						}
 					}
 					break;
 				case 2://Cargar los datos de los empleados desde el archivo data.csv (modo binario)
-					/* if(!controller_loadFromBinary("data.csv",listaEmpleados))
+					if(banderaCargaArchivo==0 && !controller_loadFromBinary("dataBin.csv",listaEmpleados))
+					{
+
+						printf("\nEmpleados cargados correctamente\n");
+						banderaCargaArchivo=1;
+					}
+					else
+					{
+						if(!utn_getNumeroInt(&opcionCarga,
+											"\nYa hay datos cargados, ¿desea reemplazarlos?"
+											"\n1 -Sí (se borrara todo lo cargado tanto por lista como manualmente.)"
+											"\n2 -No (Vuelve al menú principal) ",
+											"ERROR. Ingrese un número entero",
+											1,
+											2,
+											INTENTOS))
 						{
-							printf("\nHubo un problema al cargar los datos desde el archivo csv.");
-						}*/
-					printf("opción 2");
+							switch(opcionCarga)
+							{
+							case 1:
+								if(!controller_loadFromBinary("dataBin.csv",listaEmpleados))
+								{
+									printf("\nVolviendo al menú principal...");
+								}
+								break;
+							case 2:
+								printf("\nVolviendo al menú principal...");
+								break;
+							}
+						}
+					}
 					break;
 				case 3://Alta de empleado
-					if(!controller_addEmployee(listaEmpleados))
+					if(banderaCargaArchivo==0)
 					{
-						printf("\nVolviendo al menú principal...");
+						printf("\nCargue primero un archivo de datos (opción 1 ó 2).");
+					}
+					else
+					{
+						if(!controller_addEmployee(listaEmpleados))
+						{
+							printf("\nVolviendo al menú principal...");
+						}
 					}
 					break;
 				case 4://Modificar datos de empleado
 					if(!controller_editEmployee(listaEmpleados))
 					{
-						printf("\n");
+						printf("\nVolviendo al menú principal...");
 					}
 					break;
 				case 5://Baja de empleado
@@ -96,25 +159,22 @@ int main()
 					}
 						break;
 				case 7://Ordenar empleados
-					/*if(!controller_ListEmployee(listaEmpleados))
+					if(!controller_sortEmployee(listaEmpleados))
 					{
-						printf("\nHubo un problema al ordenar los empleados.");
-					}*/
-					printf("opción 7");
+						printf("\nVolviendo al menú principal...");
+					}
 					break;
 				case 8://Guardar los datos de los empleados en el archivo data.csv (modo texto).
-					/*if(!controller_saveAsText("data.csv",listaEmpleados))
+					if(!controller_saveAsText("data.csv",listaEmpleados))
 					{
-						printf("\nHubo un problema al guardar los datos desde el archivo csv.");
-					}*/
-					printf("opción 8");
+						printf("\nVolviendo al menú principal...");
+					}
 					break;
 				case 9://Guardar los datos de los empleados en el archivo data.csv (modo binario).
-					/*if(!controller_saveAsBinary("data.csv",listaEmpleados))
+					if(!controller_saveAsBinary("databin.csv",listaEmpleados))
 					{
-						printf("\nHubo un problema al guardar los datos desde el archivo csv.");
-					}*/
-					printf("opción 9");
+						printf("\nVolviendo al menú principal...");
+					}
 					break;
 			}
 		}

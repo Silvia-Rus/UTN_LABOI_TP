@@ -12,16 +12,12 @@
 #include "Employee.h"
 #include "getData.h"
 
-
 /*
  * \brief construye un espacio de memoria para alojar un nuevo cliente.
+ * 		  sustituye a la función que buscaba al primer índice vacío.
  * \return devuelve un puntero a dicho espacio si lo encontró o NULL si no.
  */
-
-//hacer un espacio en la memoria para meter a un cliente
-//antes buscábamos el primer índice libre pero ahora la memoria es dinámica
-
-Employee* employee_new()//ESTE OK
+Employee* employee_new()
 {
 	//malloc quiere la cantidad de bytes del área de memoria que va a devolver.
 	//devuelve la dirección de memoria donde empieza lo reservado.
@@ -32,13 +28,10 @@ Employee* employee_new()//ESTE OK
 
 	if(p!=NULL)
 	{
-		//ya encontramos el espacio de la memoria en la que va a estar el empleado
-		//para que no arranque vacío
-		p->id=0;
-		p->nombre[0]='\n';
-		p->horasTrabajadas=0;
-		p->sueldo=0;
-		//devuelve la dirección de memoria que reservó malloc.
+		employee_setId(p, 0);
+		employee_setNombre(p, "\n");
+		employee_setHorasTrabajadas(p, 0);
+		employee_setSueldo(p, 0);
 		return p;
 	}
 	else{return NULL;}
@@ -48,7 +41,7 @@ Employee* employee_new()//ESTE OK
 * \param el listado en el que se va a buscar.
 * \return el id más alto encontrado en el CSV..
 */
-int idMasAltoCsv(LinkedList* this)
+int employee_idMasAltoMasUno(LinkedList* this)
 {
 	int retorno=-1;
 	//la longitud de la LinkedList
@@ -69,37 +62,44 @@ int idMasAltoCsv(LinkedList* this)
 			if(i==0 || id>idMasAltoCsv)
 			{
 				idMasAltoCsv = id;
-				retorno = idMasAltoCsv;
+				retorno = idMasAltoCsv+1;
 			}
 		}
 	}
 	return retorno;
-
 }
-/*int cli_nuevoId(void)
-{
-	LinkedList* this;
-	static int id = idMasAltoCsv(*this);
-	id = id + 1;
-	return id;
-}*/
-
 /*
 * \brief genera identificadores únicos autoincrementales.
 * \return el identificador único autoincremental generado.
+* ------EN CONSTRUCCIÓN-------
 */
-int employee_nuevoId(void)
+/*int employee_nuevoId(void)
 {
+	//int id
+
+	//primera carga
+	//id[0].id=idMasAltoCsv
+	//id=id[0].id+1
+	//id[0].id=id
+
+	//segunda carga
+	//id=id[0].id+1
+	//id[0].id=id
+
+
+	//return id;
+
 	static int id = 0;
 	id = id + 1;
 	return id;
-}
+}*/
 /*
  * \brief constructor que inicializa los parámetros que puedo recibir.
- * \param puntero al id generado de manera autoincremental.
- * \param puntero al nombre introducido para el empleado.
- * \param puntero al número de horas trabajadas introducidas para el empleado.
- * \return ¿?¿
+ * \param id en formato char recibido para guardar.
+ * \param nombre en formato char recibido para guardar.
+ * \param horas trabjadas en formato char recibids para guardar.
+ * \param sueldo en formato char recibido para guardar.
+ * \return puntero al empleado que se graba.
  */
 Employee* employee_newParametrosChar(char* idStr,char* nombreStr,char* horasTrabajadasStr,char* sueldoStr)
 {
@@ -118,15 +118,15 @@ Employee* employee_newParametrosChar(char* idStr,char* nombreStr,char* horasTrab
 	}
 	return punteroEmpleado;
 }
-
 /*
  * \brief constructor que inicializa los parámetros que puedo recibir.
- * \param puntero al id generado de manera autoincremental.
- * \param puntero al nombre introducido para el empleado.
- * \param puntero al número de horas trabajadas introducidas para el empleado.
- * \return ¿?¿
+ * \param id en formato int recibido para guardar.
+ * \param nombre en formato char recibido para guardar.
+ * \param horas trabjadas en formato int recibids para guardar.
+ * \param sueldo en formato int recibido para guardar.
+ * \return puntero al empleado que se graba.
  */
-Employee* employee_newParametros(int idStr,char* nombreStr,int horasTrabajadasStr,int sueldoStr)//ESTE OK
+Employee* employee_newParametros(int idStr,char* nombreStr,int horasTrabajadasStr,int sueldoStr)
 {
 	Employee* punteroEmpleado=0;
 	//aquí creamos el espacio de memoria
@@ -134,15 +134,13 @@ Employee* employee_newParametros(int idStr,char* nombreStr,int horasTrabajadasSt
 	//Aquí lo que devolvemos por puntero
 	if(punteroEmpleado !=NULL)
 	{
-		//Ahí guarda los valores que pasan por paramétros.
-		punteroEmpleado->id = idStr;
-		strncpy(punteroEmpleado->nombre,nombreStr,128);
-		punteroEmpleado->horasTrabajadas = horasTrabajadasStr;
-		punteroEmpleado->sueldo = sueldoStr;
+		employee_setId(punteroEmpleado, idStr);
+		employee_setNombre(punteroEmpleado, nombreStr);
+		employee_setHorasTrabajadas(punteroEmpleado, horasTrabajadasStr);
+		employee_setSueldo(punteroEmpleado, sueldoStr);
 	}
 	return punteroEmpleado;
 }
-
 /*
  * \brief encuentra la posición en memoria de un empleado del cual tenemos un id que entra por parámetro.
  * \param array en el que vamos a buscar el espacio de emoria.
@@ -164,6 +162,41 @@ int employee_findById(LinkedList* pArrayListEmployee, int id)
 			{
 				retorno = i;
 				break;
+			}
+		}
+	}
+	return retorno;
+}
+/*
+ * \brief encuentra la posición en memoria de un empleado del cual tenemos un id que entra por parámetro.
+ * \param array en el que vamos a buscar el espacio de emoria.
+ * \param id a buscar..
+ * \return el lugar en la memoria.
+ */
+int employee_hayIdRepetidos(LinkedList* pArrayListEmployee)
+{
+	int retorno=0;
+	int len = ll_len(pArrayListEmployee);
+	int auxId1;
+	int auxId2;
+	Employee* auxEmp;
+
+	if(pArrayListEmployee!=NULL)
+	{
+		for(int i=0;i<len;i++)
+		{
+			auxEmp = ll_get(pArrayListEmployee, i);
+			employee_getId(auxEmp,&auxId1);
+
+			for(int r=i+1;r<len;r++)
+			{
+				auxEmp = ll_get(pArrayListEmployee, r);
+				employee_getId(auxEmp,&auxId2);
+				if(auxId1==auxId2)
+				{
+					retorno=1;
+					break;
+				}
 			}
 		}
 	}
@@ -221,7 +254,6 @@ int employee_getId(Employee* this,int* id)
 	}
 	return retorno;
 }
-
 /*
  * \brief valida el nombre introducido y lo copia al array.
  * \param array en el que vamos a copiar el nombre
@@ -235,7 +267,7 @@ int employee_setNombre(Employee* this,char* nombre)
 	if(this != NULL                         &&
 		nombre !=NULL                       &&
 		//valida que son letras y espacios
-		esLetrasYEspacios(nombre, NOMBRE_LEN) )
+		esNombreValido(nombre, NOMBRE_LEN) )
 	{
 		//copia el nombre que ENTRÓ por parámetro a this->nombre.
 		//para acceder a ese campo hay que invocar esta función
@@ -366,5 +398,33 @@ int employee_getSueldo(Employee* this,int* sueldo)
 		*sueldo=this->sueldo;
 		retorno=0;
 	}
+	return retorno;
+}
+
+int employee_sort(void* itemOne,void* itemTwo)
+{
+	int retorno=0;
+	Employee* auxEmp1;
+	Employee* auxEmp2;
+
+	auxEmp1	 = itemOne;
+	auxEmp2	 = itemTwo;
+
+	char nombre1[NOMBRE_LEN];
+	char nombre2[NOMBRE_LEN];
+
+	if(employee_getNombre(auxEmp1, nombre1)==0   &&
+	   employee_getNombre(auxEmp2, nombre2)==0	)
+	{
+		if( strncmp(nombre1, nombre2,NOMBRE_LEN)>0)
+		{
+			retorno = 1;
+		}
+		else
+		{
+			retorno=-1;
+		}
+	}
+
 	return retorno;
 }

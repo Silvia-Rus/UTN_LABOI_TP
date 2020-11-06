@@ -128,6 +128,32 @@ int esLetrasYEspacios(char* cadena, int len)
 	return retorno;
 }
 /*
+ * \brief Valida que la cadena recibida está compuesta únicamente por letras, espacios y guiones
+ * \param puntero con el string validado.
+ * \param longitud del string.
+ * \return 1 (verdadero) si solo tiene letras y espacios. 0 (falso) si no.
+ */
+
+int esNombreValido(char* cadena, int len)
+{
+	int retorno = 1;
+
+	if( cadena!= NULL && len > 0)
+	{
+		for(int i=0; i<=len && cadena[i] != '\0';i++)
+		{
+			if(	(cadena[i] < 'A' || cadena[i] > 'Z') &&
+				(cadena[i] < 'a' || cadena[i] > 'z') &&
+				cadena[i] != ' ' && cadena[i] != '-')
+			{
+				retorno = 0;
+				break;
+			}
+		}
+	}
+	return retorno;
+}
+/*
  * \brief valida que la cadena recibida es un número CUIT.
  * \param puntero con el string validado.
  * \return 1 (verdadero) si es un número entero. 0 (falso) si no lo es.

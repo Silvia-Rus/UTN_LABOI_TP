@@ -17,7 +17,7 @@ typedef struct
     int sueldo;
 }Employee;
 
-int idMasAltoCsv(LinkedList* this);
+int employee_idMasAltoMasUno(LinkedList* this);
 int employee_nuevoId(void);
 int employee_findById(LinkedList* pArrayListEmployee, int id);
 Employee* employee_new();
@@ -28,7 +28,8 @@ Employee* employee_newParametros(int idStr,char* nombreStr,int horasTrabajadasSt
 Employee* employee_newParametrosChar(char* idStr,char* nombreStr,char* horasTrabajadasStr,char* sueldoStr);
 int employee_deleteIndexInArray(Employee** listPunteros, int len, int indice);
 int employee_buscarPorIdArray(Employee** listPunteros, int len, int id);
-
+int employee_hayIdRepetidos(LinkedList* pArrayListEmployee);
+int employee_sort(void* itemOne,void* itemTwo);
 int employee_setId(Employee* this,int id);
 int employee_setIdChar(Employee* this, char* id);
 int employee_getId(Employee* this,int* id);

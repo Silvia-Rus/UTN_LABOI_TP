@@ -16,5 +16,6 @@ int utn_getCadena(char* pResultado, int len, char* mensaje, char* mensajeError, 
 int utn_getLetrasYEspacios(char* pResultado, int len, char* mensaje, char* mensajeError, int reintentos);
 int utn_getCuit(char* pResultado, char* mensaje, char* mensajeError, int reintentos, int len);
 int esLetrasYEspacios(char* cadena, int len);
+int esNombreValido(char* string, int len);
 int esNumericaInt(char* cadena, int len);
 #endif /* GETDATA_H_ */
