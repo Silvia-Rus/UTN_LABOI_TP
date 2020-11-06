@@ -381,6 +381,7 @@ int controller_saveAsText(char* path , LinkedList* pArrayListEmployee)
 			pFile = fopen(path, "w");//escribe en modo texto
 			if(pFile!=NULL)
 			{
+				fprintf(pFile, "id,nombre,horasTrabajadas,sueldo\n");
 				for(int i=0;i<len;i++)
 				{
 					auxEmpleado = ll_get(pArrayListEmployee, i);

@@ -50,7 +50,7 @@ int main()
 							"8-Guardar los datos de los empleados en el archivo data.csv (modo texto).\n"
 							"9-Guardar los datos de los empleados en el archivo dataBin.csv (modo binario).\n"
 							"10-Salir\n",
-							"\n\nERROR\n\n\n",
+							"\n\nERROR. Ingrese un número del 1 al 10.\n\n\n",
 							1,
 							10,
 							INTENTOS))
@@ -60,14 +60,11 @@ int main()
 				case 1://Cargar los datos de los empleados desde el archivo data.csv (modo texto).
 					if(banderaCargaArchivo==0 && !controller_loadFromText("data.csv",listaEmpleados))
 					{
-
 						printf("\nEmpleados cargados correctamente\n");
 						banderaCargaArchivo=1;
-
 					}
 					else
 					{
-
 						if(!utn_getNumeroInt(&opcionCarga,
 											"\nYa hay datos cargados, ¿desea reemplazarlos?"
 											"\n1 -Sí (se borrara todo lo cargado tanto por lista como manualmente)"
@@ -86,9 +83,7 @@ int main()
 								}
 								break;
 							case 2:
-
-									printf("\nVolviendo al menú principal...");
-
+								printf("\nVolviendo al menú principal...");
 								break;
 							}
 						}
