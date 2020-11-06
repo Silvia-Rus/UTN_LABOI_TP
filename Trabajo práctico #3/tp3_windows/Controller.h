@@ -1,8 +1,7 @@
-
-
-
-
-
+/*
+ * controller.h
+ *
+ */
 
 int controller_loadFromText(char* path , LinkedList* pArrayListEmployee);
 int controller_loadFromBinary(char* path , LinkedList* pArrayListEmployee);

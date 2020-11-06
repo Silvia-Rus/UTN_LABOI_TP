@@ -375,31 +375,36 @@ int employee_getSueldo(Employee* this,int* sueldo)
 	}
 	return retorno;
 }
-
+/*
+ * \brief ordena alfabéticamente de manera descendente dos cadenas de caracteres..
+ * \param primer término a ordenar.
+ * \param segundo término a ordenar.
+ * \return 0 si ordenó sin problemas, -1 si hubo un error.
+ */
 int employee_sort(void* itemOne,void* itemTwo)
 {
-	int retorno=0;
-	Employee* auxEmp1;
-	Employee* auxEmp2;
+	int retorno=-2;
+	Employee* pEmpleadoA = (Employee*)itemOne;
+	char bufferNombreA[256];
+	char bufferNombreB[256];
+	employee_getNombre(pEmpleadoA, bufferNombreA);
+	employee_getNombre((Employee*)itemTwo, bufferNombreB);
+	int respuestaStrCmp = strcmp(bufferNombreA, bufferNombreB);
 
-	auxEmp1	 = itemOne;
-	auxEmp2	 = itemTwo;
-
-	char nombre1[NOMBRE_LEN];
-	char nombre2[NOMBRE_LEN];
-
-	if(employee_getNombre(auxEmp1, nombre1)==0   &&
-	   employee_getNombre(auxEmp2, nombre2)==0	)
+	if(itemOne!=NULL && itemTwo!=NULL)
 	{
-		if(strncmp(nombre1, nombre2,NOMBRE_LEN)>0)
+		if(respuestaStrCmp >0)
 		{
 			retorno = 1;
 		}
+		else if (respuestaStrCmp<0)
+		{
+			retorno = -1;
+		}
 		else
 		{
-			retorno=-1;
+			retorno = 0;
 		}
 	}
-
 	return retorno;
 }

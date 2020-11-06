@@ -184,8 +184,8 @@ int main()
 			break;
 		}
 	}while(option != 10);
-
     printf("¡Hasta la próxima!");
+    ll_deleteLinkedList(listaEmpleados);
     return EXIT_SUCCESS;
 }
 

@@ -11,7 +11,6 @@
  * \param la ruta del archivo que queremos parsear
  * \param el array de punteros a dónde vamos a almacenar los datos.
  * \return 0 si todo ok, -1 si hay errores.
- *
  */
 int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee, int pIdMasAlto)
 {
@@ -35,7 +34,6 @@ int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee, int pI
 				{
 					auxEmployee = employee_newParametrosChar(auxId, auxNombre, auxHorasTrabajadas, auxSueldo);
 					ll_add(pArrayListEmployee, auxEmployee);
-
 					retornar=0;
 				}
 
@@ -45,8 +43,8 @@ int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee, int pI
 	return retornar;
 }
 
-/** \brief Parsea los datos los datos de los empleados desde el archivo data.csv (modo binario).
- *
+/*
+ * \brief Parsea los datos los datos de los empleados desde el archivo data.csv (modo binario).
  * \param path char*
  * \param pArrayListEmployee LinkedList*
  * \return int
@@ -79,6 +77,5 @@ int parser_EmployeeFromBinary(FILE* pFile , LinkedList* pArrayListEmployee)
 			}while(feof(pFile)==0);
 			fclose(pFile);
 		}
-
 		return output;
 	}

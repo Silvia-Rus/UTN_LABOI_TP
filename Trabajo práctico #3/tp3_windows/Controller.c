@@ -34,7 +34,6 @@ int controller_loadFromText(char* path , LinkedList* pArrayListEmployee)
 			else
 			{
 				printf("\nArchivo cargado con éxito.");
-
 				retorno=0;
 			}
 		}
@@ -96,7 +95,6 @@ int controller_addEmployee(LinkedList* pArrayListEmployee)
 			!utn_getNumeroInt(&auxSueldo, "\nSueldo: ", "\nERROR. Ingrese un número entero", 0, INT_MAX, INTENTOS))
 		{
 			auxId = employee_idMasAltoMasUno(pArrayListEmployee);
-			//auxId = employee_idMasAltoMasUno(pArrayListEmployee);
 			auxEmployee = employee_newParametros(auxId, auxNombre, auxHorasTrabajadas, auxSueldo);
 			ll_add(pArrayListEmployee, auxEmployee);
 			printf("\nId asignado: %d", auxId);
@@ -285,7 +283,6 @@ int controller_removeEmployee(LinkedList* pArrayListEmployee)
  * \brief Lista todos los empleados existentes.
  * \param el array de punteros a los empleados.
  * \return 0 si imprimió sin problemas, -1 si no (no hay empleados en la base de datos).
- *
  */
 int controller_ListEmployee(LinkedList* pArrayListEmployee)
 {
@@ -300,7 +297,8 @@ int controller_ListEmployee(LinkedList* pArrayListEmployee)
 	{
 		if(ll_len(pArrayListEmployee)<1)
 		{
-			printf("\nNo hay datos en la base de datos.");
+			printf("\nNo hay empleados grabados en la base de datos."
+					"\nVuelta al menú principal...");
 		}
 		else
 		{
@@ -332,9 +330,8 @@ int controller_ListEmployee(LinkedList* pArrayListEmployee)
     return retorno;
 }
 /* \brief Ordenar empleados
- * \param path char*
- * \param pArrayListEmployee LinkedList*
- * \return int
+ * \param el array de punteros a los empleados.
+ * \return 0 si ordenó sin problemas, -1 si no (no hay empleados en la base de datos).
  */
 int controller_sortEmployee(LinkedList* pArrayListEmployee)
 {
@@ -344,8 +341,8 @@ int controller_sortEmployee(LinkedList* pArrayListEmployee)
 	{
 		if(ll_len(pArrayListEmployee)<1)
 		{
-			printf("\nNo hay datos en la base de datos.");
-			printf("\nVolviendo al menú principal...");
+			printf("\nNo hay empleados grabados en la base de datos."
+					"\nVuelta al menú principal...");
 		}
 		else
 		{
@@ -354,7 +351,6 @@ int controller_sortEmployee(LinkedList* pArrayListEmployee)
 			retorno=0;
 		}
 	}
-
 	return retorno;
 }
 /* \brief Guarda los datos de los empleados en el archivo data.csv (modo texto).
@@ -377,7 +373,8 @@ int controller_saveAsText(char* path , LinkedList* pArrayListEmployee)
 	{
 		if(ll_len(pArrayListEmployee)<1)
 		{
-			printf("\nNo hay datos en la base de datos.");
+			printf("\nNo hay empleados grabados en la base de datos."
+					"\nVuelta al menú principal...");
 		}
 		else
 		{
@@ -393,21 +390,16 @@ int controller_saveAsText(char* path , LinkedList* pArrayListEmployee)
 						!employee_getSueldo(auxEmpleado, &auxSueldo))
 					{
 						fprintf(pFile, "%d,%s,%d,%d\n",auxId, auxNombre, auxHorasTrabajadas, auxSueldo);
-
-
 						retorno=0;
 					}
 				}
 				printf("Datos guardados con éxito en data.csv");
 				fclose(pFile);
 			}
-
 		}
 	}
     return retorno;
-
 }
-
 /* \brief Guarda los datos de los empleados en el archivo dataBin.csv (modo texto).
  * \param ruta al archivo en el que se guardarán los datos.
  * \param el array de punteros a los empleados.
@@ -428,7 +420,8 @@ int controller_saveAsBinary(char* path , LinkedList* pArrayListEmployee)
 	{
 		if(ll_len(pArrayListEmployee)<1)
 		{
-			printf("\nNo hay datos en la base de datos.");
+			printf("\nNo hay empleados grabados en la base de datos."
+					"\nVuelta al menú principal...");
 		}
 		else
 		{
