@@ -1,18 +1,15 @@
 /*
- * utn.h
+ * getData.h
  *
- *  Created on: 7 sept. 2020
  *      Author: Silvia Rus Mata
  */
 
-#ifndef UTN_H_
-#define UTN_H_
+#ifndef GETDATA_H_
+#define GETDATA_H_
 
+int utn_getNumeroInt(int* pResultado, char* mensaje, char* mensajeError, int minimo, int maximo, int reintentos);
+int utn_getNumeroFloat(float* pResultado,char* mensaje,char* mensajeError,int minimo,int maximo,int reintentos);
+int utn_getCadena(char* pResultado, int len, char* mensaje, char* mensajeError, int reintentos);
+int utn_getLetrasYEspacios(char* pResultado, int len, char* mensaje, char* mensajeError, int reintentos);
 
-int getInt(int* pResultado, char* mensaje, char* mensajeError,  int maximo, int minimo, int reintentos);
-float getFloat(char mensaje[]);
-char getChar(char mensaje[]);
-
-
-
-#endif /* UTN_H_ */
+#endif /* GETDATA_H_ */
